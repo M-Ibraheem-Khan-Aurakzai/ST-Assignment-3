@@ -22,12 +22,12 @@ jobs:
           distribution: 'temurin'
           java-version: '23'
 
-      # Step 3: Compile dependencies
-      - name: Compile dependencies
+     # Step 3: Compile dependencies
+      - name: Download dependencies
         run: |
-          mkdir lib
+          mkdir -p lib
           wget -q https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j-9.0.0.jar -O lib/mysql-connector-j-9.0.0.jar
-
+      
       # Step 4: Compile Java files
       - name: Compile Java files
         run: |
