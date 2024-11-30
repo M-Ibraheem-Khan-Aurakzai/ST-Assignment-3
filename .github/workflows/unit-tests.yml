@@ -23,7 +23,5 @@ jobs:
     - name: Compile and Run Tests
       run: |
         mkdir -p bin
-        # Compile all Java files from src/
-        javac -cp ".:lib/*" -d bin src/*.java
-        # Run the JUnit tests
+        javac -cp ".:lib/*" -d bin src/*.java test/*.java
         java -cp "bin:lib/*" org.junit.runner.JUnitCore LoginAppTest
