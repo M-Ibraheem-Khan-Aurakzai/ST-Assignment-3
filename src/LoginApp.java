@@ -49,7 +49,7 @@ public class LoginApp extends JFrame {
 
             String userName = authenticateUser(email);
             if (userName != null) {
-                System.out.println("Name : " + userName);
+                System.out.println("Name: " + userName);
                 JOptionPane.showMessageDialog(null, "Welcome, " + userName + "!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "User not found.", "Login Failed", JOptionPane.ERROR_MESSAGE);
