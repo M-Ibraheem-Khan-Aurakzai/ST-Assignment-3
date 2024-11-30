@@ -15,30 +15,30 @@ public class LoginApp extends JFrame {
     private static final String DB_PASSWORD = "20L-2176MIKA";
 
     public LoginApp() {
-//        setTitle("Login Screen");
-//        setSize(350, 200);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setLocationRelativeTo(null);
-//
-//        JPanel panel = new JPanel();
-//        panel.setLayout(new GridLayout(3, 2, 10, 10));
-//
-//        // Email Label and Text Field
-//        panel.add(new JLabel("Email:"));
-//        emailField = new JTextField();
-//        panel.add(emailField);
-//
-//        // Password Label and Password Field
-//        panel.add(new JLabel("Password:"));
-//        passwordField = new JPasswordField();
-//        panel.add(passwordField);
-//
-//        // Login Button
-//        JButton loginButton = new JButton("Login");
-//        loginButton.addActionListener(new LoginAction());
-//        panel.add(loginButton);
-//
-//        add(panel);
+        setTitle("Login Screen");
+        setSize(350, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 2, 10, 10));
+
+        // Email Label and Text Field
+        panel.add(new JLabel("Email:"));
+        emailField = new JTextField();
+        panel.add(emailField);
+
+        // Password Label and Password Field
+        panel.add(new JLabel("Password:"));
+        passwordField = new JPasswordField();
+        panel.add(passwordField);
+
+        // Login Button
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new LoginAction());
+        panel.add(loginButton);
+
+        add(panel);
     }
 
     private class LoginAction implements ActionListener {
