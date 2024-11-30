@@ -13,39 +13,32 @@ public class LoginApp extends JFrame {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/a2sql";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "20L-2176MIKA";
-    private Authenticator authenticator;
 
     public LoginApp() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            // Only create GUI components if the environment supports it
-            setTitle("Login Screen");
-            setSize(350, 200);
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setLocationRelativeTo(null);
+        setTitle("Login Screen");
+        setSize(350, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-            JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(3, 2, 10, 10));
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 2, 10, 10));
 
-            // Email Label and Text Field
-            panel.add(new JLabel("Email:"));
-            emailField = new JTextField();
-            panel.add(emailField);
+        // Email Label and Text Field
+        panel.add(new JLabel("Email:"));
+        emailField = new JTextField();
+        panel.add(emailField);
 
-            // Password Label and Password Field
-            panel.add(new JLabel("Password:"));
-            passwordField = new JPasswordField();
-            panel.add(passwordField);
+        // Password Label and Password Field
+        panel.add(new JLabel("Password:"));
+        passwordField = new JPasswordField();
+        panel.add(passwordField);
 
-            // Login Button
-            JButton loginButton = new JButton("Login");
-            loginButton.addActionListener(new LoginAction());
-            panel.add(loginButton);
+        // Login Button
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new LoginAction());
+        panel.add(loginButton);
 
-            add(panel);
-        }
-
-        // Initialize the authenticator for the login functionality
-        this.authenticator = new Authenticator();
+        add(panel);
     }
 
     private class LoginAction implements ActionListener {
@@ -54,49 +47,39 @@ public class LoginApp extends JFrame {
             String email = emailField.getText();
             String password = new String(passwordField.getPassword()); // Password is ignored for validation
 
-            String userName = authenticator.authenticateUser(email);
+            String userName = authenticateUser(email);
             if (userName != null) {
-                if (!GraphicsEnvironment.isHeadless()) {
-                    // Only show message if not headless
-                    JOptionPane.showMessageDialog(null, "Welcome, " + userName + "!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
-                }
+                System.out.println("Name: " + userName);
+                JOptionPane.showMessageDialog(null, "Welcome, " + userName + "!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                if (!GraphicsEnvironment.isHeadless()) {
-                    JOptionPane.showMessageDialog(null, "User not found.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(null, "User not found.", "Login Failed", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    // Separate Authentication Logic from GUI
-    public static class Authenticator {
-        public String authenticateUser(String email) {
-            String userName = null;
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-                String query = "SELECT name FROM User WHERE Email = ?";
-                PreparedStatement stmt = conn.prepareStatement(query);
-                stmt.setString(1, email);
-                ResultSet rs = stmt.executeQuery();
+    String authenticateUser(String email) {
+        String userName = null;
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            String query = "SELECT name FROM User WHERE Email = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
 
-                if (rs.next()) {
-                    userName = rs.getString("Name");
-                }
-                rs.close();
-                stmt.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (rs.next()) {
+                userName = rs.getString("Name");
             }
-            return userName;
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return userName;
     }
 
     public static void main(String[] args) {
-        // Launch the GUI if not headless
-        if (!GraphicsEnvironment.isHeadless()) {
-            SwingUtilities.invokeLater(() -> {
-                LoginApp loginApp = new LoginApp();
-                loginApp.setVisible(true);
-            });
-        }
+        SwingUtilities.invokeLater(() -> {
+            LoginApp loginApp = new LoginApp();
+            loginApp.setVisible(true);
+        });
     }
 }
