@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class LoginAppTest {
+public class LoginAppTest {
     //Test cases for Email Authentication
     @org.junit.jupiter.api.Test //Testing that a valid email existing in database returns the valid name of the email
     void testValidEmail() {
