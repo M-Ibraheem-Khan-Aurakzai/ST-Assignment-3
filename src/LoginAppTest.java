@@ -1,5 +1,5 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test; // Import JUnit 4 annotation
+import static org.junit.Assert.*; // import for assertion methods
 
 public class LoginAppTest {
 
@@ -9,38 +9,36 @@ public class LoginAppTest {
     public void testValidEmail() {
         LoginApp app = new LoginApp();
         String result = app.authenticateUser("johndoe@example.com");
-        assertNotNull(result, "User name should not be null for valid email.");
-        assertEquals("John Doe", result, "Expected user name does not match.");
+        assertNotNull("User name should not be null for valid email.", result);
+        assertEquals("Expected user name does not match.", "John Doe", result);
     }
 
     @Test // Testing that an invalid/non-existing email in the database only returns null
     public void testInvalidEmail() {
         LoginApp app = new LoginApp();
         String result = app.authenticateUser("nonexistent@example.com");
-        assertNull(result, "Result should be null for non-existent email.");
+        assertNull("Result should be null for non-existent email.", result);
     }
 
     @Test // Testing that an empty field only returns null
     public void testEmptyEmailField() {
         LoginApp app = new LoginApp();
         String result = app.authenticateUser("");
-        assertNull(result, "Result should be null for empty email.");
+        assertNull("Result should be null for empty email.", result);
     }
 
     @Test // Testing SQL Injection threats
     public void testEmailSqlInjection() {
         LoginApp app = new LoginApp();
         String result = app.authenticateUser("'; DROP TABLE User; --");
-        assertNull(result, "SQL injection attempt should return null.");
+        assertNull("SQL injection attempt should return null.", result);
     }
 
     @Test // Testing case sensitivity to check that uppercase letters do not affect output
     public void testEmailCaseSensitivity() {
         LoginApp app = new LoginApp();
         String result = app.authenticateUser("JOHNDOE@example.com");
-        assertNotNull(result, "User name should not be null for valid email even if the email is in upper case.");
-        assertEquals("John Doe", result, "Expected user name does not match.");
+        assertNotNull("User name should not be null for valid email even if the email is in upper case.", result);
+        assertEquals("Expected user name does not match.", "John Doe", result);
     }
-
-    // You can extend this further by adding other test methods for password-related functionality
 }
