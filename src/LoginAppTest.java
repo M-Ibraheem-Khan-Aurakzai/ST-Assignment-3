@@ -1,44 +1,40 @@
-import org.junit.Test; // Import JUnit 4 annotation
-import static org.junit.Assert.*; // import for assertion methods
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class LoginAppTest {
+class LoginAppTest {
+    // Create an instance of the Authenticator class for testing
+    private final LoginApp.Authenticator authenticator = new LoginApp.Authenticator();
 
     // Test cases for Email Authentication
-
-    @Test // Testing that a valid email existing in the database returns the valid name of the email
-    public void testValidEmail() {
-        LoginApp app = new LoginApp();
-        String result = app.authenticateUser("johndoe@example.com");
-        assertNotNull("User name should not be null for valid email.", result);
-        assertEquals("Expected user name does not match.", "John Doe", result);
+    @Test // Testing that a valid email existing in database returns the valid name of the email
+    void testValidEmail() {
+        String result = authenticator.authenticateUser("johndoe@example.com");
+        assertNotNull(result, "User name should not be null for valid email.");
+        assertEquals("John Doe", result, "Expected user name does not match.");
     }
 
-    @Test // Testing that an invalid/non-existing email in the database only returns null
-    public void testInvalidEmail() {
-        LoginApp app = new LoginApp();
-        String result = app.authenticateUser("nonexistent@example.com");
-        assertNull("Result should be null for non-existent email.", result);
+    @Test // Testing that an invalid/non-existing email in database only returns null
+    void testInvalidEmail() {
+        String result = authenticator.authenticateUser("nonexistent@example.com");
+        assertNull(result, "Result should be null for non-existent email.");
     }
 
-    @Test // Testing that an empty field only returns null
-    public void testEmptyEmailField() {
-        LoginApp app = new LoginApp();
-        String result = app.authenticateUser("");
-        assertNull("Result should be null for empty email.", result);
+    @Test // Testing that empty field only returns null
+    void testEmptyEmailField() {
+        String result = authenticator.authenticateUser("");
+        assertNull(result, "Result should be null for empty email.");
     }
 
-    @Test // Testing SQL Injection threats
-    public void testEmailSqlInjection() {
-        LoginApp app = new LoginApp();
-        String result = app.authenticateUser("'; DROP TABLE User; --");
-        assertNull("SQL injection attempt should return null.", result);
+    @Test // Testing SQL Injection Threats
+    void testEmailSqlInjection() {
+        String result = authenticator.authenticateUser("'; DROP TABLE User; --");
+        assertNull(result, "SQL injection attempt should return null.");
     }
 
-    @Test // Testing case sensitivity to check that uppercase letters do not affect output
-    public void testEmailCaseSensitivity() {
-        LoginApp app = new LoginApp();
-        String result = app.authenticateUser("JOHNDOE@example.com");
-        assertNotNull("User name should not be null for valid email even if the email is in upper case.", result);
-        assertEquals("Expected user name does not match.", "John Doe", result);
+    @Test // Testing Case sensitivity to check that Uppercase letters do not affect output
+    void testEmailCaseSensitivity() {
+        String result = authenticator.authenticateUser("JOHNDOE@example.com");
+        assertNotNull(result, "User name should not be null for valid email even if the email is in upper case.");
+        assertEquals("John Doe", result, "Expected user name should not be null.");
     }
 }
