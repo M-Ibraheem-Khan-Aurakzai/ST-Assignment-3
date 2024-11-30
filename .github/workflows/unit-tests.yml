@@ -11,28 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the code
-      - name: Checkout code
+      # Step 1: Check out the repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Java
+      # Step 2: Set up JDK
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # Use OpenJDK
-          java-version: '17'     # Update if you're using a different version
+          distribution: 'temurin'
+          java-version: '23'
 
-      # Step 3: Cache dependencies
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      # Step 4: Build and run tests
-      - name: Build and run tests
+      # Step 3: Compile dependencies
+      - name: Compile dependencies
         run: |
-          mvn install
-          mvn test
+          mkdir lib
+          wget -q https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j-9.0.0.jar -O lib/mysql-connector-j-9.0.0.jar
+
+      # Step 4: Compile Java files
+      - name: Compile Java files
+        run: |
+          mkdir -p out
+          javac -cp "lib/*:." -d out $(find . -name "*.java")
+
+      # Step 5: Run Unit Tests
+      - name: Run unit tests
+        run: |
+          java -cp "lib/*:out:." org.junit.runner.JUnitCore LoginAppTest
