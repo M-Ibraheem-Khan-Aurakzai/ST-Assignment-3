@@ -1,15 +1,18 @@
+package test;
+
+import main.LoginApp;
 import org.junit.Test; // Import JUnit 4 annotation
 import org.junit.jupiter.api.BeforeAll;
 
 import static org.junit.Assert.*; // import for assertion methods
 
 public class LoginAppTest {
-    // Run before all tests to set the system property for headless mode
-    @BeforeAll
-    static void setUp() {
-        // Set the system property to run in headless mode
-        System.setProperty("java.awt.headless", "true");
-    }
+//    // Run before all tests to set the system property for headless mode
+//    @BeforeAll
+//    static void setUp() {
+//        // Set the system property to run in headless mode
+//        System.setProperty("java.awt.headless", "true");
+//    }
     // Test cases for Email Authentication
 
     @Test // Testing that a valid email existing in the database returns the valid name of the email
