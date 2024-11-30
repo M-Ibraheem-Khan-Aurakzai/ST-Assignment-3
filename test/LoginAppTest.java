@@ -1,4 +1,5 @@
 import org.junit.Test; // Import JUnit 4 annotation
+import org.junit.jupiter.api.BeforeAll;
 
 import static org.junit.Assert.*; // import for assertion methods
 
