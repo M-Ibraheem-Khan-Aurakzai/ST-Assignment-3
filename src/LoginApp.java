@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginApp extends JFrame {
-    private JTextField emailField;
-    private JPasswordField passwordField;
-    private AuthenticationService authService = new AuthenticationService();
+    private final JTextField emailField;
+    private final JPasswordField passwordField;
+    private final AuthenticationService authService = new AuthenticationService();
 
     public LoginApp() {
         setTitle("Login Screen");
@@ -39,11 +39,16 @@ public class LoginApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             String email = emailField.getText();
-            String password = new String(passwordField.getPassword()); // Password is ignored for validation
+            String password = new String(passwordField.getPassword());
 
             String userName = authService.authenticateUser(email);
             if (userName != null) {
-                JOptionPane.showMessageDialog(null, "Welcome, " + userName + "!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
+                boolean pass = authService.authenticateUserPassword(email, password);
+                if (pass) {
+                    JOptionPane.showMessageDialog(null, "Welcome, " + userName + "!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect password, please try again, " + userName + ".", "Login Failed", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "User not found.", "Login Failed", JOptionPane.ERROR_MESSAGE);
             }
