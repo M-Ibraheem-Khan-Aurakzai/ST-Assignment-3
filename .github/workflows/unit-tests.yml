@@ -10,6 +10,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env: # Set environment variables here
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
