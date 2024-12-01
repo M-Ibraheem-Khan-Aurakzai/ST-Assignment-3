@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 public class AuthenticationService {
     private static final String DB_URL = "jdbc:mysql://mysql-st-a3-st-a-3.b.aivencloud.com:10080/defaultdb";
     private static final String DB_USER = "avnadmin";
-    private static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
+    private static final String DB_PASSWORD = System.getenv("DDB_PASSWORD");
 
     public String authenticateUser(String email) {
         String userName = null;
