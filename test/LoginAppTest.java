@@ -52,7 +52,8 @@ public class LoginAppTest {
         assertTrue("Expected value 'true' for correct email & password did not match.", result);
     }
 
-    @Test //Testing that an invalid password always returns false
+    //Testing that an invalid password always returns false
+    @Test
     public void testInvalidPassword() {
         boolean result = authService.authenticateUserPassword("johndoe@example.com", "password321");
         assertFalse("Expected value 'false' for Invalid password did not match.", result);
